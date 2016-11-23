@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+<title>index.html with jQuery</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+	 type="text/javascript"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(document).ajaxError(function(e, xhr, opt){
+      alert("Error requesting " + opt.url + ": " + xhr.status + " " +
+          xhr.statusText);
+      });
+    $("#two, #three").click(function(){
+    	var where = 'times/' + $(this).attr('id');
+      $.ajax({
+        url: where,
+        method: 'POST',
+        dataType: 'json',
+        data: { x: $('#x').val()},
+        success: function(json) {
+          $('#result').html(json.result);
+          }
+        });
+      });
+    });
+
+  $(function(){
+    $("#toggle").click(function(){
+      $.ajax({
+        url: 'toggle',
+        method: 'POST'
+        });
+      });
+    });
+  </script>
+<meta http-equiv="cache-control" content="no-cache"/>
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="expires" content="0"/>
+</head>
+<body>
+<div>
+<img src="img/giulio.jpg" alt="gz"/>
+<br/>
+<button id="toggle">toggle dir listing</button>
+<label>Number:</label> <input type="text" id="x" maxlength="15" size="15"/>
+<button id="two">Double it</button>
+<button id="three">Treble it</button>
+<label>Result:</label> <span id="result">&nbsp;</span>
+</div>
+</body>
+</html>

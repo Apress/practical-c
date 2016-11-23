@@ -1,0 +1,17 @@
+/* count.h
+ *
+ * Counts the solutions containing a particular cell.
+ * Returns the number of solutions found.
+ *
+ * Copyright (c) 2016 by Giulio Zambon.  All rights reserved.
+ *
+ * You are free to use (without any warranty), redistribute, and/or modify
+ * this software under the terms of the GNU General Public License version 2
+ * (http://gnu.org/licenses/gpl-2.0.html).
+ */
+#ifndef COUNT
+#define COUNT
+
+int count(int kk, int jj);
+
+#endif

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+<title>index.html with JS</title>
+<script type="text/javascript">
+function newAjaxReq() { //----------------------------------------- newAjaxReq
+  var ajaxReq;
+  try { // Firefox, Opera
+    ajaxReq = new XMLHttpRequest();
+    }
+  catch (e) { // older IEs
+    try{
+      ajaxReq = new ActiveXObject("Msxml2.XMLHTTP");
+      }
+    catch (e) {
+      try{ // still older IEs
+        ajaxReq = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+      catch (e) {
+        alert("Your browser does not support Ajax!");
+        return null;
+        }
+      }
+    }
+  return ajaxReq;
+  }
+function toggleDirListing() { //----------------------------- toggleDirListing
+  var ajaxReq = newAjaxReq();
+  if (ajaxReq != null) {
+    ajaxReq.open("POST", "toggle", true);
+    ajaxReq.send();
+    }
+  return true;
+  }
+function multBy(where) { //-------------------------------------------- multBy
+  var ajaxReq = newAjaxReq();
+  if (ajaxReq != null) {
+  	var what = "x=" + document.getElementById('x').value;
+    ajaxReq.open("POST", "times/" + where, true);
+    ajaxReq.setRequestHeader("Content-Type", "text/plain;charset=utf-8");
+    ajaxReq.setRequestHeader("Content-Length", what.length);
+    ajaxReq.send(what);
+    ajaxReq.onreadystatechange = function() {
+      if(ajaxReq.readyState == 4) {
+        var s = ajaxReq.responseText;
+        s = s.substring(0, s.indexOf('.')).substring(s.indexOf(': ') + 2);
+        document.getElementById('result').innerHTML = s;
+        }
+      }
+    }
+  return true;
+  }
+</script>
+</head>
+<body>
+<div>
+<img src="img/giulio.jpg" alt="gz"/>
+<br/>
+<button id="toggle" onclick="toggleDirListing()">toggle dir listing</button>
+<label>Number:</label> <input type="text" id="x" maxlength="15" size="15"/>
+<button id="two" onclick="multBy('two')">Double it</button>
+<button id="three" onclick="multBy('three')">Treble it</button>
+<label>Result:</label> <span id="result">&nbsp;</span>
+</div>
+</body>
+</html>
